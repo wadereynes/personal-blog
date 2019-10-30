@@ -22,7 +22,9 @@ Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+// User route
 Route::prefix('user')->group(function() {
+  Route::post('new-comment', 'UserController@newComment')->name('newComment');
   Route::get('dashboard', 'UserController@dashboard')->name('userDashboard');
   Route::get('comments', 'UserController@comments')->name('userComments');
     Route::post('comment/{id}/delete', 'UserController@deleteComment')->name('deleteComment');
@@ -31,6 +33,7 @@ Route::prefix('user')->group(function() {
   Route::post('profile', 'UserController@profilePost')->name('userProfilePost');
 });
 
+// Author route
 Route::prefix('author')->group(function() {
   Route::get('dashboard', 'AuthorController@dashboard')->name('authorDashboard');
   Route::get('posts', 'AuthorController@posts')->name('authorPosts');
@@ -42,6 +45,7 @@ Route::prefix('author')->group(function() {
   Route::get('comments', 'AuthorController@comments')->name('authorComments');
 });
 
+// Admin route
 Route::prefix('admin')->group(function(){
   Route::get('dashboard', 'AdminController@dashboard')->name('adminDashboard');
   Route::get('posts', 'AdminController@posts')->name('adminPosts');
@@ -51,5 +55,26 @@ Route::prefix('admin')->group(function(){
   Route::get('comments', 'AdminController@comments')->name('adminComments');
   Route::post('comment/{id}/delete', 'AdminController@deleteComment')->name('adminDeleteComment');
   Route::get('users', 'AdminController@users')->name('adminUsers');
-  Route::get('user/{id}/edit', 'AdminController@editUser')->name('adminEditUser');
+  Route::get('users/{id}/edit', 'AdminController@editUser')->name('adminEditUser');
+  Route::post('users/{id}/edit', 'AdminController@editUserPost')->name('adminEditUserPost');
+  Route::post('user/{id}/delete', 'AdminController@deleteUser')->name('adminDeleteUser');
+
+  Route::get('products', 'AdminController@products')->name('adminProducts');
+
+  Route::get('products/new', 'AdminController@newProduct')->name('adminNewProduct');
+  Route::post('products/new', 'AdminController@newProductPost')->name('adminNewProduct');
+
+  Route::get('product/{id}', 'AdminController@editProduct')->name('adminEditProduct');
+  Route::post('product/{id}', 'AdminController@editProductPost')->name('adminEditProduct');
+
+  Route::post('product/{id}/delete', 'AdminController@deleteProduct')->name('adminDeleteProduct');
+});
+
+// Shop route
+Route::prefix('shop')->group(function(){
+  Route::get('/', 'ShopController@index')->name('shop.index');
+  Route::get('product/{id}', 'ShopController@singleProduct')->name('shop.singleProduct');
+  Route::get('product/{id}/order', 'ShopController@orderProduct')->name('shop.orderProduct');
+  Route::get('product/{id}/execute', 'ShopController@executeOrder')->name('shop.executeOrder');
+
 });

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('tile') Editing {{ $post->title}} @endsection
+@section('tile') Editing {{ $user->name}} @endsection
 
 @section('content')
 <div class="content">
@@ -25,14 +25,14 @@
                    </div>
                   @endif
 
-                  <form action="{{ route('adminPostEditPost', $post->id) }}" method="post">
+                  <form action="{{ route('adminEditUserPost', $user->id) }}" method="post">
                     @csrf
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="normal-input" class="form-control-label">Name</label>
-                                    <input name="name" id="normal-input" class="form-control" value="{{ $user->name }}" placeholder="Username">
+                                    <input name="name" id="normal-input" class="form-control" value="{{ $user->name }}">
                                 </div>
                             </div>
 
@@ -46,9 +46,9 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="normal-input" class="form-control-label">Permissions</label>
-                                    <input name="author" type="checkbox"  class="form-control"> Author
+                                    <input name="author" type="checkbox"  class="form-control" value=1  {{ $user->author == true ? 'checked' : ''}}> Author
                                     <br>
-                                    <input name="admin" type="checkbox" class="form-control"> Admin
+                                    <input name="admin" type="checkbox" class="form-control" value=1 {{ $user->admin == true ? 'checked' : '' }}> Admin
                                 </div>
                             </div>
 

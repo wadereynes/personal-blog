@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
 use App\User;
+use App\Product;
 use App\Http\Requests\CreatePost;
+use App\Http\Requests\UserUpdate;
+use App\Charts\DashboardChart;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -14,11 +18,34 @@ class AdminController extends Controller
     public function __construct()
     {
       $this->middleware('checkRole:admin');
+      $this->middleware('auth');
     }
 
     public function dashboard()
     {
-      return view('admin.dashboard');
+      $chart = new DashboardChart;
+
+      $days = $this->generateDateRange(Carbon::now()->subDays(30), Carbon::now());
+
+      $posts = [];
+
+      foreach($days as $day) {
+          $posts[] = Post::whereDate('created_at', $day)->count();
+      }
+
+      $chart->dataset('Posts', 'line', $posts);
+      $chart->labels($days);
+
+      return view('admin.dashboard', compact('chart'));
+    }
+
+    public function generateDateRange(Carbon $start_date, Carbon $end_date)
+    {
+        $dates = [];
+        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            $dates[] = $date->format('Y-m-d');
+        }
+        return $dates;
     }
 
     public function comments()
@@ -73,5 +100,113 @@ class AdminController extends Controller
     {
       $user = User::where('id', $id)->first();
       return view('admin.editUser', compact('user'));
+    }
+
+    public function editUserPost(UserUpdate $request, $id)
+    {
+      $user = User::where('id', $id)->first();
+      $user->name = $request['name'];
+      $user->email = $request['email'];
+
+      if($request['author'] == 1)
+      {
+        $user->author = true;
+      }
+      else if ($request['admin'] == 1)
+      {
+        $user->admin = true;
+      }
+
+      $user->save();
+
+      return back()->with('success', 'User updated successfully');
+    }
+
+    public function deleteUser($id)
+    {
+      $user = User::where('id', $id)->first();
+      $user->delete();
+
+      return back();
+    }
+
+    public function products()
+    {
+      $products = Product::all();
+      return view('admin.products', compact('products'));
+    }
+
+    public function newProduct()
+    {
+      return view('admin.newProduct');
+    }
+
+    public function newProductPost(Request $request)
+    {
+      $this->validate($request, [
+        'title' => 'required|string',
+        'thumbnail' => 'required|file',
+        'description' => 'required',
+        'price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/'
+      ]);
+      $product = new Product;
+      $product->title = $request['title'];
+      $product->description = $request['description'];
+      $product->price = $request['price'];
+
+      $thumbnail = $request->file('thumbnail');
+
+      $fileName = $thumbnail->getClientOriginalName();
+      $fileExtension = $thumbnail->getClientOriginalExtension();
+
+      $thumbnail->move('product-image', $fileName);
+      $product->thumbnail = 'product-image/' . $fileName;
+
+      $product->save();
+
+      return back();
+
+    }
+
+    public function editProduct($id)
+    {
+      $product = Product::findOrFail($id);
+      return view('admin.editProduct', compact('product'));
+    }
+
+    public function editProductPost(Request $request, $id)
+    {
+    
+
+      $this->validate($request, [
+        'title' => 'required|string',
+        'thumbnail' => 'file',
+        'description' => 'required',
+        'price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/'
+      ]);
+
+      $product = Product::findOrFail($id);
+      $product->title = $request['title'];
+      $product->description = $request['description'];
+      $product->price = $request['price'];
+
+      if($request->hasFile('thumbnail'))
+      {
+        $thumbnail = $request->file('thumbnail');
+        $fileName = $thumbnail->getClientOriginalName();
+        $thumbnail->move('product-image', $fileName);
+        $product->thumbnail = 'product-image/' . $fileName;
+      }
+      $product->save();
+
+      return back();
+
+    }
+
+    public function deleteProduct($id)
+    {
+      $product = Product::findOrFail($id)->delete();
+
+      return back();
     }
 }

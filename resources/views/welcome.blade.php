@@ -10,7 +10,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>Laravel Blog</h1>
-            <span class="subheading">Personal blog</span>
+            <span class="subheading">{{ remove_spaces('Personal blog') }}</span>
           </div>
         </div>
       </div>
@@ -39,9 +39,7 @@
         <hr>
         @endforeach
         <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div>
+        {{ $posts->links() }}
       </div>
     </div>
   </div>

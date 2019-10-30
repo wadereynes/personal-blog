@@ -72,13 +72,17 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Posts by day1
+                        Posts by day
                     </div>
 
-                    
+                    <div class="class-body p-0">
+                      {!! $chart->container() !!}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+{!! $chart->script() !!}
 @endsection
