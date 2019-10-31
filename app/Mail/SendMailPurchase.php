@@ -1,18 +1,13 @@
 <?php
-
 namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
 class SendMailPurchase extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $paymentInfo;
-
     /**
      * Create a new message instance.
      *
@@ -22,7 +17,6 @@ class SendMailPurchase extends Mailable
     {
         $this->paymentInfo = $paymentInfo;
     }
-
     /**
      * Build the message.
      *
@@ -31,10 +25,9 @@ class SendMailPurchase extends Mailable
     public function build()
     {
         return $this
-        ->from('sales@personal-blog.test')
-        ->view('email.purchase')->with([
-          'paymentInfo' => $this->paymentInfo
-        ]);
-
+            ->from('sales@personal-blog.test')
+            ->view('email.purchase')->with([
+                'paymentInfo' => $this->paymentInfo
+            ]);
     }
 }

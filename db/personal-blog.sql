@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2019 at 08:25 AM
+-- Generation Time: Oct 30, 2019 at 11:40 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.1.32
 
@@ -42,7 +42,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `user_id`, `post_id`, `content`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Comment one content', '2019-10-23 16:00:00', NULL);
+(4, 1, 1, 'test', '2019-10-27 16:00:00', '2019-10-27 16:00:00'),
+(5, 1, 1, 'new comment over form', '2019-10-27 22:58:44', '2019-10-27 22:58:44'),
+(6, 1, 5, 'Sample comment', '2019-10-28 00:36:19', '2019-10-28 00:36:19');
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_10_23_063041_create_posts_table', 2),
-(4, '2019_10_23_063911_create_comments_table', 3);
+(4, '2019_10_23_063911_create_comments_table', 3),
+(5, '2019_10_28_075335_create_products_table', 4);
 
 -- --------------------------------------------------------
 
@@ -83,7 +86,7 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
-('johndoe@mail.com', '$2y$10$iJDA7web9/KakoIRIhAwV.WDfofnsAFuZb90u0upDf7hLJ2SSyndC', '2019-10-22 18:56:06');
+('johndoe@mail.com', '$2y$10$UbDQU7NBbX9ACnTH/CtLMOoNjvTxSKVES6zlKGGzk0dOzw44rGEpa', '2019-10-29 18:42:09');
 
 -- --------------------------------------------------------
 
@@ -105,8 +108,33 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Post One.', 'Post one content', '2019-10-23 16:00:00', '2019-10-24 18:54:33'),
-(2, 1, 'Post Two', 'Post two content\r\nmultiple', '2019-10-12 16:00:00', NULL);
+(1, 1, 'Test', 'test conent', '2019-10-27 16:00:00', '2019-10-27 16:00:00'),
+(5, 1, 'Post two', 'Post two content.', '2019-10-27 23:28:20', '2019-10-27 23:28:20'),
+(6, 1, 'Post three', 'Post three content.', '2019-10-27 23:29:07', '2019-10-27 23:29:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `thumbnail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` double(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `thumbnail`, `title`, `description`, `price`, `created_at`, `updated_at`) VALUES
+(1, 'product-image/tshirt-128.png', 'Red t-shirt', 'This tshirt is red', 10.00, '2019-10-28 18:00:50', '2019-10-29 17:57:41'),
+(3, 'product-image/TShirt3-128.png', 'Green t-shirt', 'This tshirt is green', 15.00, '2019-10-29 17:56:43', '2019-10-29 17:57:10');
 
 -- --------------------------------------------------------
 
@@ -131,8 +159,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `admin`, `author`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'John Smith', 'johndoe@mail.com', '$2y$10$8wsm0bYBbZ7VFqpD/hf4FeikTaKfATHdCAtwMkPnwepmQy5XMXIIW', 1, 1, 'qd66Hwwi6QJkOBTHVX3rsXow2REm38sVMOt87SqcnO8QFI8BPWOHKPeyWsD9', '2019-10-22 18:40:35', '2019-10-24 01:22:57'),
-(2, 'John Doe2', 'john@doe.com', '$2y$10$kSUrcHGU2V1luVnO4nd3YeM93n6IHcgs.8vH7w4q12rx6lSDtm4im', 0, 0, 'Iim3QkjD5jir7orDmr5YR1nsfyZ8vHcg4T0P7urYdtnDHBpHkcPaFEXqFfhu', '2019-10-22 21:24:21', '2019-10-22 21:24:21');
+(1, 'John Smith', 'johndoe@mail.com', '$2y$10$8wsm0bYBbZ7VFqpD/hf4FeikTaKfATHdCAtwMkPnwepmQy5XMXIIW', 1, 1, 'WbTwc4memMvJAxDldoqsApezuqkdvOEh6AbYfGPyCrFGmsSXIAD3lSk6K0hw', '2019-10-22 18:40:35', '2019-10-28 17:12:20'),
+(3, 'test', 'test@mail.com', '$2y$10$DGSDxaxx7DH6gVdtVba.9ulD3NK0.iEUI45jCUJiDXT9dnL.7wNqu', 0, 0, NULL, '2019-10-29 18:56:11', '2019-10-29 18:56:11');
 
 --
 -- Indexes for dumped tables
@@ -163,6 +191,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -177,25 +211,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
