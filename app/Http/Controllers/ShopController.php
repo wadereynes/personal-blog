@@ -171,7 +171,7 @@ class ShopController extends Controller
                 $payment = Payment::get($paymentId, $apiContext);
                 $paymentInfo = json_decode($payment);
                 Mail::to($paymentInfo->payer->payer_info->email)
-                    ->bcc('webshop-admin@personal-blog.test')
+                    // ->bcc('webshop-admin@personal-blog.test')
                     ->send(new SendMailPurchase($paymentInfo));
             } catch (\Exception $ex) {
                  print('Error1Wade');

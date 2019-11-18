@@ -89,7 +89,8 @@
                 <div class="card-body py-5">
                     <div class="form-group">
                         <label class="form-control-label">Name</label>
-                        <input type="text" name="name" value="{{ old('name') }}" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}">
+                        <input type="text"  name="name" value="juan" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}">
+                        <input type="hidden" value="juan" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}">
 
                         @if ($errors->has('name'))
                             <span class="invalid-feedback" role="alert">
@@ -101,6 +102,7 @@
                     <div class="form-group">
                         <label class="form-control-label">Email</label>
                         <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
+                        <!-- <input type="hidden" value="sample@mail.com" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}"> -->
 
                         @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
@@ -111,7 +113,8 @@
 
                     <div class="form-group">
                         <label class="form-control-label">Password</label>
-                        <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+                        <input type="password" value="123456" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+                        <input type="hidden" value="123456" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
 
                         @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
@@ -123,7 +126,9 @@
                     <div class="form-group">
                         <label class="form-control-label">Confirm Password</label>
                         <input type="password" name="password_confirmation" class="form-control">
+                        <button type="button" name="test" value="test">test</button>
                     </div>
+
                 </div>
 
                 <div class="card-footer">
