@@ -1,8 +1,14 @@
-# How to make an API
+Screenshots
+<img src="screenshot\dashboard.png">
+<img src="screenshot\landing.png">
+<img src="screenshot\login.png">
+<img src="screenshot\register.png">
 
-This is a simple laravel API example including API versioning from my YouTube tutorial series on how to make an API.
+# Personal Blog Practice in Laravel with Web Shop
 
-[My YouTube Tutorial Series](https://www.youtube.com)
+This is a simple web app about how to create blog post with admin panel with custom <br> role of users and also this app have a feature web shop.
+
+[My YouTube Tutorial Series](https://www.youtube.com/K4kashii)
 
 ## How to set up this project
 
